@@ -1,11 +1,11 @@
-let numeroMaior = document.getElementById("ate");
-let quantidadeDeNumeros = document.getElementById("quantidade");
-let numeroMenor = document.getElementById("de");
+let numeroMaior = parseInt(document.getElementById("ate").value);
+let quantidadeDeNumeros = parseInt(document.getElementById("quantidade").value);
+let numeroMenor = parseInt(document.getElementById("de").value);
 let numerosSorteados = [];
 let numeroVerificador;
 
 function escolherNumero(){
-    return parseInt(Math.random()*(Number(numeroMaior.value) - Number(numeroMenor.value) + 1)) + Number(numeroMenor.value);
+    return Math.floor(Math.random() * (numeroMaior - numeroMenor + 1) + numeroMenor);
 }
 
 // função de desabilitar botão
@@ -28,50 +28,47 @@ function mensagem(texto){
 }
 
 function sortear() {
-    numeroMenor = document.getElementById("de");
-    numeroMaior = document.getElementById("ate");
-    quantidadeDeNumeros = document.getElementById("quantidade");
+    numeroMenor = parseInt(document.getElementById("de").value);
+    numeroMaior = parseInt(document.getElementById("ate").value);
+    quantidadeDeNumeros = parseInt(document.getElementById("quantidade").value);
 
     // verifica inconsistencias nas escolhas dos numeros
-        if ((Number(numeroMaior.value) == "") || (Number(quantidadeDeNumeros.value) == "") || (Number(numeroMenor.value) == "")){
+        if ((numeroMaior == "") || (quantidadeDeNumeros == "") || (numeroMenor == "")){
         mensagem("Preencha todos os campos");
         return;
         } else { 
-            if(Number(numeroMenor.value) > Number(numeroMaior.value)){
+            if(numeroMenor > numeroMaior){
                 mensagem("O numero escolhido no SEGUNDO CAMPO deve ser menor que o TERCEIRO CAMPO");
                 return;
                 } else {
-                    if (Number(numeroMaior.value) - Number(numeroMenor.value) +1 < Number(quantidadeDeNumeros.value)){
+                    if (numeroMaior - numeroMenor +1 < quantidadeDeNumeros){
                         mensagem("Quantidade de números sorteados maior que o quantidade total");
                         return;
+                    } else {
+                            // executa o sorteio após as verificações
+                            for (let index = 0; index < quantidadeDeNumeros; index++) {
+                                numeroVerificador = escolherNumero();
+                                while (numerosSorteados.includes(numeroVerificador)){
+                                    numeroVerificador = escolherNumero();
+                                }
+                                numerosSorteados.push(numeroVerificador);
+                            } 
+                                // Mensagem final
+                                mensagem("Números sorteados: " + numerosSorteados.sort((a, b) => a - b));
+
+                                // desabilita o botão de sorteio e habilita o botão de reinicio
+                                desabilitarBotao("btn-sortear");
+                                habilitarBotao("btn-reiniciar");                            
+                            }
                     }
                 }
     }
 
-    // executa o sorteio após as verificações
-    for (let index = 0; index < quantidadeDeNumeros.value; index++) {
-        numeroVerificador = escolherNumero()
-
-        while(numerosSorteados.includes(Number(numeroVerificador))){
-            numeroVerificador = escolherNumero()
-        }
-
-        numerosSorteados.push(numeroVerificador)        
-    }
-
-    // Mensagem final
-    mensagem("Números sorteados: " + numerosSorteados);
-
-    // desabilita o botão de sorteio e habilita o botão de reinicio
-    desabilitarBotao("btn-sortear");
-    habilitarBotao("btn-reiniciar");
-}
-
-    // função para reiniciar o jogo
+// função para reiniciar o jogo
 function reiniciar() {
-    numeroMaior.value = "";
-    numeroMenor.value = "";
-    quantidadeDeNumeros.value = "";
+    numeroMaior = "";
+    numeroMenor = "";
+    quantidadeDeNumeros = "";
     mensagem("Números sorteados:  nenhum até agora");
     numerosSorteados = [];
     desabilitarBotao("btn-reiniciar");

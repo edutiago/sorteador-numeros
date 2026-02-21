@@ -28,15 +28,20 @@ function mensagem(texto){
 }
 
 function sortear() {
-    numeroMenor = parseInt(document.getElementById("de").value);
-    numeroMaior = parseInt(document.getElementById("ate").value);
-    quantidadeDeNumeros = parseInt(document.getElementById("quantidade").value);
+    numeroMenor = document.getElementById("de").value;
+    numeroMaior = document.getElementById("ate").value;
+    quantidadeDeNumeros = document.getElementById("quantidade").value;
 
     // verifica inconsistencias nas escolhas dos numeros
         if ((numeroMaior == "") || (quantidadeDeNumeros == "") || (numeroMenor == "")){
         mensagem("Preencha todos os campos");
         return;
         } else { 
+            //transformando as variaveis em números
+            numeroMenor = parseInt(numeroMenor)
+            numeroMaior = parseInt(numeroMaior)
+            quantidadeDeNumeros = parseInt(quantidadeDeNumeros)
+
             if(numeroMenor > numeroMaior){
                 mensagem("O numero escolhido no SEGUNDO CAMPO deve ser menor que o TERCEIRO CAMPO");
                 return;
@@ -66,9 +71,9 @@ function sortear() {
 
 // função para reiniciar o jogo
 function reiniciar() {
-    numeroMaior = "";
-    numeroMenor = "";
-    quantidadeDeNumeros = "";
+    document.getElementById("quantidade").value = "";
+    document.getElementById("de").value = "";
+    document.getElementById("ate").value = "";
     mensagem("Números sorteados:  nenhum até agora");
     numerosSorteados = [];
     desabilitarBotao("btn-reiniciar");

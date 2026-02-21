@@ -51,7 +51,7 @@ function sortear() {
     // executa o sorteio após as verificações
     for (let index = 0; index < quantidadeDeNumeros.value; index++) {
         numeroVerificador = escolherNumero()
-        
+
         while(numerosSorteados.includes(Number(numeroVerificador))){
             numeroVerificador = escolherNumero()
         }
@@ -65,9 +65,6 @@ function sortear() {
     // desabilita o botão de sorteio e habilita o botão de reinicio
     desabilitarBotao("btn-sortear");
     habilitarBotao("btn-reiniciar");
-
-    // apenas para consulta
-    console.log(numeroMenor.value);
 }
 
     // função para reiniciar o jogo

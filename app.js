@@ -51,6 +51,7 @@ function sortear() {
     // executa o sorteio após as verificações
     for (let index = 0; index < quantidadeDeNumeros.value; index++) {
         numeroVerificador = escolherNumero()
+        
         while(numerosSorteados.includes(Number(numeroVerificador))){
             numeroVerificador = escolherNumero()
         }
